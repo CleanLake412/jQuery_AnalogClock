@@ -1,6 +1,6 @@
 <html>
 <head>
-	<link type="text/css" rel="stylesheet" href="style.css">
+	<link type="text/css" rel="stylesheet" href="analogclock.css">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <body>
@@ -198,27 +198,25 @@ JavaScript has received criticism for the way it implements these conversions as
 	</div>
 </body>
 
-<script src = "jquery.clock.js" type = "text/javascript">
+<script src = "jquery.analogclock.js" type = "text/javascript">
 </script>
 <script type = "text/javascript" language = "javascript">
  $(document).ready(function() {
-	var setting1 = {
+
+	$("#clock1").analogclock({
 		x:500,
-		y:655,
-		size:300,
+		y:600,
+		size:400,
 		skew:-30,
 		scale:[1, -0.7]
-	}
-	$("#clock1").setclock(setting1);
+	});
 
-	
-	var setting2 = {
-		x:500,
-		y:400,
-		size:300,
-		skew:-30,
-	}
-	$("#clock2").setclock(setting2);
+	$("#clock2").analogclock({
+		x:300,
+		y:300,
+		size:300
+		//skew:-30,
+	});
  });
 </script>	
 </html>
