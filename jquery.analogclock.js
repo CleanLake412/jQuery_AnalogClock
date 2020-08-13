@@ -13,15 +13,18 @@ $.fn.analogclock = async function(_options) {
 		y: 0,
 		size: 500,
 		skew: 0,
+        rotate: 0,
 		scale: [1,1],
-		hourHandCenter:'95.89%',
-		minuteHandCenter:'96.72%',
+		hourHandCenter: 95.89,
+		minuteHandCenter: 96.72
 	};
 	
 	if (_options != undefined) {
 		jQuery.each(_options, function(i, val) {
 			option[i] = val;
 		});
+        option.hourHandCenter = parseFloat(option.hourHandCenter);
+        option.minuteHandCenter = parseFloat(option.minuteHandCenter);
 	}
 	
 	let hourHandImgWidth = 0, hourHandImgHeight = 0, minuteHandImgWidth = 0, minuteHandImgHeight = 0;
@@ -31,18 +34,18 @@ $.fn.analogclock = async function(_options) {
 	img1.onload = function() {
 		hourHandImgWidth = this.width;
 		hourHandImgHeight = this.height;
-	}
+	};
 	img1.src = 'img/hour.svg';
 
 	const img2 = new Image();
 	img2.onload = function() {
 		minuteHandImgWidth = this.width;
 		minuteHandImgHeight = this.height;
-	}
+	};
 	img2.src = 'img/min.svg';
 
 	console.log("waiting while images loaded");
-	while (hourHandImgWidth == 0 || hourHandImgHeight == 0 || minuteHandImgWidth == 0 || minuteHandImgHeight == 0) {
+	while (hourHandImgWidth === 0 || hourHandImgHeight === 0 || minuteHandImgWidth === 0 || minuteHandImgHeight === 0) {
 		await new Promise(resolve => setTimeout(resolve, 10));
 	}
 	console.log("succeeded to determine size of images");
@@ -77,7 +80,7 @@ $.fn.analogclock = async function(_options) {
 			"top": hourHandTop + "px",
 			"width": hourHandWidth + "px",
 			"height": hourHandHeight + "px",
-			"transform-origin": "50% " + option.hourHandCenter
+			"transform-origin": "50% " + option.hourHandCenter + "%"
 		});
 
 		clock.find('.analogclock-m-hand').css({
@@ -85,15 +88,16 @@ $.fn.analogclock = async function(_options) {
 			"top": minuteHandTop + "px",
 			"width": minuteHandWidth + "px",
 			"height": minuteHandHeight + "px",
-			"transform-origin": "50% " + option.minuteHandCenter
+			"transform-origin": "50% " + option.minuteHandCenter + "%"
 		});
 
 		// Rotate and skew clock
 		let transform = "";
 		transform += "scale(" + option.scale[0] + ", " + option.scale[1] + ")";
-		transform += "skew(" + option.skew + "deg)";
+		transform += " skew(" + option.skew + "deg)";
+        transform += " rotate(" + option.rotate + "deg)";
 		clock.css("transform", transform);
-	}
+	};
 
 	// Rotate hands according to current time
 	let clock = function(clock) {
@@ -105,7 +109,7 @@ $.fn.analogclock = async function(_options) {
 
 		clockDivs[0].css("transform", "rotate("+hour +"deg)");
 		clockDivs[1].css("transform", "rotate("+ (time[1]*6 + time[2]/10) +"deg)");
-	}
+	};
 	
 	init(this);
 	clock(this);
